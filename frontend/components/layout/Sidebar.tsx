@@ -47,15 +47,19 @@ export default function Sidebar() {
   const pathname = usePathname();
   const router = useRouter();
   const [role, setRole] = useState<Role | "">("");
+  const [userName, setUserName] = useState("Pengguna");
 
   useEffect(() => {
     if (typeof window === "undefined") return;
     const rawUser = localStorage.getItem("user");
     if (!rawUser) return;
     try {
-      setRole(JSON.parse(rawUser).role || "");
+      const parsed = JSON.parse(rawUser);
+      setRole(parsed.role || "");
+      setUserName(parsed.full_name || "Pengguna");
     } catch {
       setRole("");
+      setUserName("Pengguna");
     }
   }, []);
 
@@ -70,15 +74,15 @@ export default function Sidebar() {
   };
 
   return (
-    <aside className="fixed left-0 top-0 hidden h-screen w-72 flex-col border-r border-slate-800 bg-slate-950 px-4 py-5 text-white lg:flex">
-      <div className="rounded-3xl bg-slate-900 px-4 py-5">
+    <aside className="fixed left-0 top-0 hidden h-screen w-[260px] flex-col bg-[#0F2A44] px-4 py-5 text-white shadow-2xl shadow-slate-900/20 lg:flex">
+      <div className="rounded-3xl bg-white/5 px-4 py-5 ring-1 ring-white/10">
         <div className="flex items-center gap-3">
           <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-white/10">
             <ShieldAlert className="h-6 w-6" />
           </div>
           <div>
-            <h1 className="text-lg font-semibold">BK SMART</h1>
-            <p className="text-xs text-slate-300">SMK Nasional</p>
+            <h1 className="text-lg font-semibold leading-tight">BK SMART</h1>
+            <p className="text-xs text-blue-100">SMK Nasional</p>
           </div>
         </div>
       </div>
@@ -91,8 +95,8 @@ export default function Sidebar() {
             <Link
               key={item.href}
               href={item.href}
-              className={`flex items-center gap-3 rounded-2xl px-4 py-3 text-sm transition ${
-                active ? "bg-blue-600 text-white shadow-lg shadow-blue-950/40" : "text-slate-200 hover:bg-white/10"
+              className={`flex items-center gap-3 rounded-2xl px-4 py-3 text-[15px] transition ${
+                active ? "bg-blue-500 text-white shadow-lg shadow-blue-900/30" : "text-slate-100/90 hover:bg-white/10 hover:text-white"
               }`}
             >
               <Icon className="h-4 w-4" />
@@ -103,11 +107,22 @@ export default function Sidebar() {
       </nav>
 
       <div className="mt-4 rounded-3xl border border-white/10 bg-white/5 p-4">
-        <p className="text-xs text-slate-300">Akun aktif</p>
-        <p className="mt-1 text-sm font-medium">Sesi login tersedia</p>
+        <div className="flex items-center gap-3">
+          <div className="flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-sm font-semibold uppercase">
+            {userName
+              .split(" ")
+              .slice(0, 2)
+              .map((part) => part[0])
+              .join("")}
+          </div>
+          <div className="min-w-0">
+            <p className="truncate text-sm font-semibold">{userName}</p>
+            <p className="truncate text-xs text-slate-300">{role || "-"}</p>
+          </div>
+        </div>
         <button
           onClick={handleLogout}
-          className="mt-4 inline-flex items-center gap-2 rounded-2xl bg-white px-4 py-3 text-sm font-semibold text-slate-900"
+          className="mt-4 inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-white px-4 py-3 text-sm font-semibold text-slate-900"
         >
           <LogOut className="h-4 w-4" />
           Logout

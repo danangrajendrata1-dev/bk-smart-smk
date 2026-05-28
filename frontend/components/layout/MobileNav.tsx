@@ -25,8 +25,8 @@ export default function MobileNav() {
             <Link
               key={item.href}
               href={item.href}
-              className={`flex flex-col items-center justify-center rounded-2xl px-2 py-2 text-[11px] font-medium ${
-                active ? "text-blue-700" : "text-slate-500"
+              className={`flex flex-col items-center justify-center rounded-2xl px-2 py-2 text-[11px] font-medium transition ${
+                active ? "bg-blue-50 text-blue-700" : "text-slate-500"
               }`}
             >
               <Icon className={`h-5 w-5 ${active ? "text-blue-700" : "text-slate-500"}`} />
