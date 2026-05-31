@@ -2,7 +2,10 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { BellRing, FileArchive, LayoutDashboard, MessageSquareWarning, MoreHorizontal, School2, Users } from "lucide-react";
+import { LayoutDashboard, MessageSquareWarning, MoreHorizontal, School2, Users } from "lucide-react";
+
+import LayoutModeSwitcher from "@/components/layout/LayoutModeSwitcher";
+import { useLayoutMode } from "@/hooks/useLayoutMode";
 
 const items = [
   { title: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
@@ -14,9 +17,12 @@ const items = [
 
 export default function MobileNav() {
   const pathname = usePathname();
+  const { isForceDesktop, isForceMobile } = useLayoutMode();
+
+  if (isForceDesktop) return null;
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 z-20 border-t border-slate-200 bg-white/95 px-2 py-2 backdrop-blur lg:hidden">
+    <nav className={`fixed bottom-0 left-0 right-0 z-20 border-t border-slate-200 bg-white/95 px-2 py-2 backdrop-blur ${isForceMobile ? "" : "lg:hidden"}`}>
       <div className="grid grid-cols-5 gap-1">
         {items.map((item) => {
           const active = pathname === item.href || pathname.startsWith(`${item.href}/`);
@@ -35,6 +41,11 @@ export default function MobileNav() {
           );
         })}
       </div>
+      {isForceMobile ? (
+        <div className="mt-2 border-t border-slate-100 pt-2">
+          <LayoutModeSwitcher compact />
+        </div>
+      ) : null}
     </nav>
   );
 }

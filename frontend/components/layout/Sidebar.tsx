@@ -23,6 +23,7 @@ import {
 
 import { logout } from "@/services/authService";
 import { roleAccess } from "@/lib/roleAccess";
+import { useLayoutMode } from "@/hooks/useLayoutMode";
 import type { Role } from "@/types/auth";
 
 const menus = [
@@ -47,6 +48,7 @@ export default function Sidebar() {
   const pathname = usePathname();
   const router = useRouter();
   const [role, setRole] = useState<Role | "">("");
+  const { mode, isForceDesktop, isForceMobile } = useLayoutMode();
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -69,8 +71,15 @@ export default function Sidebar() {
     router.push("/login");
   };
 
+  const rootClassName =
+    isForceDesktop
+      ? "fixed left-0 top-0 z-30 flex h-screen w-[260px] flex-col border-r border-slate-800 bg-[#0F2A44] px-4 py-5 text-white"
+      : isForceMobile
+        ? "hidden"
+        : "fixed left-0 top-0 z-30 hidden h-screen w-[260px] flex-col border-r border-slate-800 bg-[#0F2A44] px-4 py-5 text-white lg:flex";
+
   return (
-    <aside className="fixed left-0 top-0 hidden h-screen w-72 flex-col border-r border-slate-800 bg-slate-950 px-4 py-5 text-white lg:flex">
+    <aside className={rootClassName}>
       <div className="rounded-3xl bg-slate-900 px-4 py-5">
         <div className="flex items-center gap-3">
           <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-white/10">
