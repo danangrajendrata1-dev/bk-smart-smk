@@ -38,9 +38,7 @@
 
 ## 4. Hubungkan Frontend ke Backend
 
-Pastikan `NEXT_PUBLIC_API_URL` di Vercel mengarah ke **public Railway URL** backend yang aktif, misalnya `https://nama-app.up.railway.app`.
-
-Jangan isi dengan domain internal seperti `bk-smart-smk.railway.internal`, dan jangan isi tanpa protokol `https://`.
+Pastikan `NEXT_PUBLIC_API_URL` di Vercel mengarah ke URL backend Railway yang aktif.
 
 Semua request frontend harus lewat `process.env.NEXT_PUBLIC_API_URL`.
 
@@ -56,3 +54,4 @@ Semua request frontend harus lewat `process.env.NEXT_PUBLIC_API_URL`.
 - Jangan commit file `.env` asli.
 - Gunakan `.env.example` sebagai panduan.
 - Jika schema database berubah, buat migration Alembic.
+
