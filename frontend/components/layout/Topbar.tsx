@@ -1,6 +1,6 @@
 "use client";
 
-import { Bell, CalendarDays, Menu } from "lucide-react";
+import { Bell, CalendarDays } from "lucide-react";
 import { useEffect, useState } from "react";
 
 import type { User } from "@/types/auth";
@@ -34,9 +34,6 @@ export default function Topbar() {
     <header className="sticky top-0 z-20 border-b border-slate-200 bg-white/95 px-4 py-3 backdrop-blur lg:px-6">
       <div className="flex items-center justify-between gap-3">
         <div className="flex items-center gap-3">
-          <button className="rounded-xl border border-slate-200 bg-white p-2 text-slate-600 lg:hidden" type="button" aria-label="Buka menu">
-            <Menu className="h-4 w-4" />
-          </button>
           <div>
             <h2 className="text-lg font-semibold text-slate-900 sm:text-xl">Dashboard</h2>
             <div className="mt-1 flex items-center gap-2 text-sm text-slate-500">
